@@ -1,0 +1,18 @@
+#include <stdio.h>
+
+#define MINIMAL 1e-6
+
+int main()
+{
+	int n, m, a;
+	long long num_row=1,num_column=1;
+	long long ans;
+	scanf("%d%d%d", &n, &m, &a);
+	num_row = n / a;
+	num_column = m / a;
+	if (num_row*a != n) num_row++;
+	if (num_column*a != m) num_column++;
+	ans = num_column*num_row;
+	printf("%lld", ans);
+	return 0;
+}
