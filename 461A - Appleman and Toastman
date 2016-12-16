@@ -1,0 +1,72 @@
+#include <stdio.h>
+#include <algorithm>
+
+int arr[300002] = { 0 };
+
+/*void swap(int arr[], int left, int right)
+{
+	int tmp = arr[left];
+	arr[left] = arr[right];
+	arr[right] = tmp;
+}
+
+int partition(int arr[], int left, int right)
+{
+	int pivot = arr[left];
+	int i = left, j = right;
+	while (1)
+	{
+		while (arr[i] < pivot)
+		{
+			i++;
+		}
+		while (arr[j] > pivot)
+		{
+			j--;
+		}
+		if (i < j)
+		{
+			swap(arr, i, j);
+			i++;
+			j--;
+		}
+		else
+		{
+			return j;
+		}
+	}
+}
+
+void Qsort(int arr[], int left, int right)
+{
+	if (left < right)
+	{
+		int pivot = partition(arr, left, right);
+		Qsort(arr, left, pivot);
+		Qsort(arr, pivot + 1, right);
+	}
+}*/
+
+int main()
+{
+	int n = 0;
+	long long sum = 0, ans = 0;
+	scanf("%d", &n);
+	for (int i = 0; i < n; i++)
+	{
+		scanf("%d", &arr[i]);
+		sum += arr[i];
+	}
+	//Qsort(arr, 0, n - 1);
+	std::sort(arr, arr + n);
+	int left = 0, right = n;
+	ans = sum;
+	while (left < right - 1)
+	{
+		ans += sum;
+		sum -= arr[left];
+		left++;
+	}
+	printf("%lld", ans);
+	return 0;
+}
