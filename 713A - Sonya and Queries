@@ -1,0 +1,111 @@
+/*********************************************************************
+**Idea:Lets exchange every digit by value							**
+**of digit modulo 2 and receive binary string.						**
+**We will convert it to binary form in number r.					**
+**G — array for counts. If we have '+' query we increase G[r].		**
+**If we have '-' query we decrease G[r]. Otherwise we output G[r].	**
+**																	**
+**					----Codeforces Round #371 Editorial By Sonechko	**
+*********************************************************************/
+
+
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+int multiset[1000000] = { 0 };
+
+int bintodec(char *s)
+{
+	char *p = s;
+	int dec = 0;
+	while (*p != 0)
+	{
+		dec = 2 * dec + *p - '0';
+		p++;
+	}
+	return dec;
+}
+
+void convert(long long n,char *s)
+{
+	int ilen = 0;
+	long long tmp = n;
+	while (tmp != 0)
+	{
+		tmp /= 10;
+		ilen++;
+	}
+	tmp = n;
+	for (int i = ilen - 1; i >= 0; i--)
+	{
+		if ((tmp % 10) % 2 == 0)
+		{
+			s[i] = '0';
+		}
+		else
+		{
+			s[i] = '1';
+		}
+		tmp /= 10;
+	}
+	s[ilen] = 0;
+}
+
+void killRet(char *s)
+{
+	int len = strlen(s);
+	if (s[len - 1] == '\n') s[len - 1] = 0;
+}
+
+void add(long long n)
+{
+	char s[25];
+	convert(n, s);
+	multiset[bintodec(s)]++;
+}
+
+void min(long long n)
+{
+	char s[25];
+	convert(n, s);
+	multiset[bintodec(s)]--;
+}
+
+void enquire(char *s)
+{
+	printf("%d\n", multiset[bintodec(s)]);
+}
+
+int main()
+{
+	int n;
+	cin >> n;
+	getchar();
+	for (int i = 0; i <n; i++)
+	{
+		char line[25];
+		fgets(line, 25, stdin);
+		killRet(line);
+		char *s = line + 2;
+		long long tmp = atoll(s);
+		switch (line[0])
+		{
+		case '+':
+			add(tmp);
+			break;
+		case '-':
+			min(tmp);
+			break;
+		case '?':
+			enquire(s);
+			break;
+		default:
+			i--;
+			break;
+		}
+	}
+	return 0;
+}
+
